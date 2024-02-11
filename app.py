@@ -42,30 +42,50 @@ selected_movie = st.selectbox(
     movie_list
 )
 
-if st.button('Show Recommendation'):
-    recommended_movie_names,recommended_movie_posters,recommended_movie_overview = recommend(selected_movie)
-    col1, col2, col3, col4, col5 = st.rows(5)
-    with col1:
-        st.text(recommended_movie_names[0])
-        st.image(recommended_movie_posters[0])
-        st.text(recommended_movie_overview[0])
-    with col2:
-        st.text(recommended_movie_names[1])
-        st.image(recommended_movie_posters[1])
-        st.text(recommended_movie_overview[1])
+# to dipaly in one column
+# if st.button('Show Recommendation'):
+#     recommended_movie_names,recommended_movie_posters,recommended_movie_overview = recommend(selected_movie)
+#     col1, col2, col3, col4, col5 = st.columns(5)
+#     with col1:
+#         st.text(recommended_movie_names[0])
+#         st.image(recommended_movie_posters[0])
+#         st.text(recommended_movie_overview[0])
+#     with col2:
+#         st.text(recommended_movie_names[1])
+#         st.image(recommended_movie_posters[1])
+#         st.text(recommended_movie_overview[1])
 
-    with col3:
-        st.text(recommended_movie_names[2])
-        st.image(recommended_movie_posters[2])
-        st.text(recommended_movie_overview[2])
-    with col4:
-        st.text(recommended_movie_names[3])
-        st.image(recommended_movie_posters[3])
-        st.text(recommended_movie_overview[3])
-    with col5:
-        st.text(recommended_movie_names[4])
-        st.image(recommended_movie_posters[4])
-        st.text(recommended_movie_overview[4])
+#     with col3:
+#         st.text(recommended_movie_names[2])
+#         st.image(recommended_movie_posters[2])
+#         st.text(recommended_movie_overview[2])
+#     with col4:
+#         st.text(recommended_movie_names[3])
+#         st.image(recommended_movie_posters[3])
+#         st.text(recommended_movie_overview[3])
+#     with col5:
+#         st.text(recommended_movie_names[4])
+#         st.image(recommended_movie_posters[4])
+#         st.text(recommended_movie_overview[4])
+if st.button('Show Recommendation'):
+    recommended_movie_names, recommended_movie_posters, recommended_movie_overview = recommend(selected_movie)
+    
+    # Calculate the number of rows needed
+    num_movies = len(recommended_movie_names)
+    num_columns = 1  # You can adjust the number of columns as needed
+    num_rows = (num_movies + num_columns - 1) // num_columns
+    
+    # Create columns for each movie
+    for row in range(num_rows):
+        cols = st.columns(num_columns)
+        for col in range(num_columns):
+            index = row * num_columns + col
+            if index < num_movies:
+                with cols[col]:
+                    st.text(recommended_movie_names[index])
+                    st.image(recommended_movie_posters[index])
+                    st.text(recommended_movie_overview[index])
+
 
 
 # run with:: streamlit run app.py
